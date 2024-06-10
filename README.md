@@ -7,7 +7,8 @@
 </p>
 
 <p align="center">
-    <b>API SOLID para gerenciar usuários</b>
+    <b>API SOLID para gerenciar usuários</b><br/>
+    <b>Deploy - https://goandslay-teste-t-cnico.onrender.com</b>
 </p>
 
 <h2 id="technologies">💻 Technologies</h2>
