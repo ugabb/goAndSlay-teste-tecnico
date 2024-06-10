@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsup src --out-dir build"
+    "build": "prisma migrate deploy && prisma generate && tsup src --out-dir build"
   },
   "keywords": [],
   "author": "",
