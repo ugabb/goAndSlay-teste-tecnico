@@ -1,11 +1,11 @@
 Descrição do Teste
 Você deve criar uma API RESTful em Node.js que gerencie informações de usuários. A API deve permitir as seguintes operações:
 
-- [ ] Criar um novo usuário
-- [ ] Listar todos os usuários
-- [ ] Obter um usuário específico pelo ID
-- [ ] Atualizar as informações de um usuário existente
-- [ ] Deletar um usuário
+- [x] Criar um novo usuário
+- [x] Listar todos os usuários
+- [x] Obter um usuário específico pelo ID
+- [x] Atualizar as informações de um usuário existente
+- [x] Deletar um usuário
 
 Requisitos
 Entidade Usuário:
@@ -62,54 +62,54 @@ let users = [];
 
 // Criar Usuário
 app.post('/users', (req, res) => {
-    const { name, email, age } = req.body;
-    const user = { id: uuidv4(), name, email, age };
-    users.push(user);
-    res.status(201).json(user);
+const { name, email, age } = req.body;
+const user = { id: uuidv4(), name, email, age };
+users.push(user);
+res.status(201).json(user);
 });
 
 // Listar Usuários
 app.get('/users', (req, res) => {
-    res.json(users);
+res.json(users);
 });
 
 // Obter Usuário por ID
 app.get('/users/:id', (req, res) => {
-    const { id } = req.params;
-    const user = users.find(u => u.id === id);
-    if (!user) {
-        return res.status(404).json({ error: 'User not found' });
-    }
-    res.json(user);
+const { id } = req.params;
+const user = users.find(u => u.id === id);
+if (!user) {
+return res.status(404).json({ error: 'User not found' });
+}
+res.json(user);
 });
 
 // Atualizar Usuário
 app.put('/users/:id', (req, res) => {
-    const { id } = req.params;
-    const { name, email, age } = req.body;
-    const userIndex = users.findIndex(u => u.id === id);
-    if (userIndex === -1) {
-        return res.status(404).json({ error: 'User not found' });
-    }
-    const updatedUser = { id, name, email, age };
-    users[userIndex] = updatedUser;
-    res.json(updatedUser);
+const { id } = req.params;
+const { name, email, age } = req.body;
+const userIndex = users.findIndex(u => u.id === id);
+if (userIndex === -1) {
+return res.status(404).json({ error: 'User not found' });
+}
+const updatedUser = { id, name, email, age };
+users[userIndex] = updatedUser;
+res.json(updatedUser);
 });
 
 // Deletar Usuário
 app.delete('/users/:id', (req, res) => {
-    const { id } = req.params;
-    const userIndex = users.findIndex(u => u.id === id);
-    if (userIndex === -1) {
-        return res.status(404).json({ error: 'User not found' });
-    }
-    users.splice(userIndex, 1);
-    res.status(204).send();
+const { id } = req.params;
+const userIndex = users.findIndex(u => u.id === id);
+if (userIndex === -1) {
+return res.status(404).json({ error: 'User not found' });
+}
+users.splice(userIndex, 1);
+res.status(204).send();
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+console.log(`Server running on port ${PORT}`);
 });
 Estamos ansiosos para ver o seu trabalho. Se você tiver qualquer dúvida, não hesite em entrar em contato.
 
@@ -118,4 +118,3 @@ Atenciosamente,
 João Marcelo
 CTO
 GoAnd Slay
-
