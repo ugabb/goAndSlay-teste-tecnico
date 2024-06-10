@@ -1,120 +1,141 @@
-Descrição do Teste
-Você deve criar uma API RESTful em Node.js que gerencie informações de usuários. A API deve permitir as seguintes operações:
+<h1 align="center" style="font-weight: bold;">Users API</h1>
 
-- [x] Criar um novo usuário
-- [x] Listar todos os usuários
-- [x] Obter um usuário específico pelo ID
-- [x] Atualizar as informações de um usuário existente
-- [x] Deletar um usuário
+<p align="center">
+ <a href="#tech">Technologies</a> • 
+ <a href="#started">Getting Started</a> • 
+ <a href="#routes">API Endpoints</a> •
+</p>
 
-Requisitos
-Entidade Usuário:
+<p align="center">
+    <b>API SOLID para gerenciar usuários</b>
+</p>
 
-id (string, UUID)
-name (string)
-email (string)
-age (number)
-Operações da API:
+<h2 id="technologies">💻 Technologies</h2>
 
-Criar Usuário: POST /users
-Corpo da requisição: { "name": "John Doe", "email": "john.doe@example.com", "age": 25 }
-Listar Usuários: GET /users
-Obter Usuário por ID: GET /users/:id
-Atualizar Usuário: PUT /users/:id
-Corpo da requisição: { "name": "John Doe", "email": "john.doe@example.com", "age": 26 }
-Deletar Usuário: DELETE /users/:id
-Requisitos Técnicos:
+- Express
+- Prisma
+- Zod
+- Typescirpt
 
-Utilize Node.js com o framework Express.js.
-Utilize um banco de dados em memória (como um array) para armazenar os dados dos usuários.
-A API deve seguir os princípios RESTful.
-Validação básica dos dados de entrada (e.g., email válido, idade positiva).
-Utilize o padrão UUID para os IDs dos usuários.
-Inclua mensagens de erro apropriadas para casos como usuário não encontrado.
-Instruções de Entrega
-Código:
+<h2 id="started">🚀 Getting started</h2>
 
-O código deve estar hospedado em um repositório público no GitHub.
-Inclua um README.md com instruções claras sobre como configurar e rodar o projeto.
-Prazo:
+<h3>Prerequisites</h3>
 
-O prazo para a entrega do teste é de 2 dias a partir do recebimento deste e-mail.
-Critérios de Avaliação:
+<h3>Cloning</h3>
 
-Organização e clareza do código.
-Correção e completude das funcionalidades.
-Tratamento de erros e validações.
-Documentação no README.md.
-Uso de boas práticas de desenvolvimento (código limpo, modularidade, etc).
-Dicas
-Faça commits frequentes e com mensagens claras.
-Adicione comentários ao código onde achar necessário para explicar decisões ou partes complexas.
-Teste sua API utilizando ferramentas como Postman ou Insomnia.
-Preze pela clareza e simplicidade no código.
-Exemplo de Início do Projeto
-const express = require('express');
-const { v4: uuidv4 } = require('uuid');
+Como clonar
 
-const app = express();
-app.use(express.json());
+```bash
+git clone https://github.com/ugabb/goAndSlay-teste-tecnico.git
+```
 
-let users = [];
+<h3>Configurando variaveis de ambiente .env </h2>
 
-// Criar Usuário
-app.post('/users', (req, res) => {
-const { name, email, age } = req.body;
-const user = { id: uuidv4(), name, email, age };
-users.push(user);
-res.status(201).json(user);
-});
+Use o `.env.example` como referência para criar o seu `.env`
 
-// Listar Usuários
-app.get('/users', (req, res) => {
-res.json(users);
-});
+```yaml
+DATABASE_URL="file:./dev.db"
+PORT=
+```
 
-// Obter Usuário por ID
-app.get('/users/:id', (req, res) => {
-const { id } = req.params;
-const user = users.find(u => u.id === id);
-if (!user) {
-return res.status(404).json({ error: 'User not found' });
+<h3>Starting</h3>
+
+Como rodar o projeto
+
+```bash
+cd goAndSlay-teste-tecnico
+yarn install
+yarn prisma db pull
+yarn dev
+```
+
+<h2 id="routes">📍 API Endpoints</h2>
+​
+
+| route               | description                                          
+|----------------------|-----------------------------------------------------
+| <kbd>GET /users</kbd>     | Lista todos os usuários
+| <kbd>GET /users/:id</kbd>     | Busca por um usuário pelo ID
+| <kbd>POST /users</kbd>     | Cria um usuário
+| <kbd>PUT /users/:id</kbd>     | Atualiza um usuário pelo ID
+| <kbd>DELETE /users/:id</kbd>     | Exclui um usuário pelo ID
+
+<h3 id="get-auth-detail">GET /users</h3>
+
+**RESPONSE**
+```json
+{
+  "users": [
+    {
+      "id": "37399e2c-fe5f-484e-b117-94eda17c9c20",
+      "name": "John",
+      "email": "john.doe@example.com",
+      "age": 26
+    },
+    {
+      "id": "972cb51b-c1e1-4a61-a4d6-2d65d45d13a2",
+      "name": "Naruto Uzumaki",
+      "email": "naruto@example.com",
+      "age": 16
+    }
+  ]
 }
-res.json(user);
-});
+```
 
-// Atualizar Usuário
-app.put('/users/:id', (req, res) => {
-const { id } = req.params;
-const { name, email, age } = req.body;
-const userIndex = users.findIndex(u => u.id === id);
-if (userIndex === -1) {
-return res.status(404).json({ error: 'User not found' });
+<h3 id="get-auth-detail">GET /users/:id</h3>
+
+**RESPONSE**
+```json
+{
+  "user": {
+    "id": "972cb51b-c1e1-4a61-a4d6-2d65d45d13a2",
+    "name": "Naruto Uzumaki",
+    "email": "naruto@example.com",
+    "age": 16
+  }
 }
-const updatedUser = { id, name, email, age };
-users[userIndex] = updatedUser;
-res.json(updatedUser);
-});
+```
 
-// Deletar Usuário
-app.delete('/users/:id', (req, res) => {
-const { id } = req.params;
-const userIndex = users.findIndex(u => u.id === id);
-if (userIndex === -1) {
-return res.status(404).json({ error: 'User not found' });
+<h3 id="post-auth-detail">POST /users</h3>
+
+**REQUEST**
+```json
+{
+  "name": "Naruto Uzumaki",
+  "email": "naruto@example.com",
+  "age": 16
 }
-users.splice(userIndex, 1);
-res.status(204).send();
-});
+```
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-console.log(`Server running on port ${PORT}`);
-});
-Estamos ansiosos para ver o seu trabalho. Se você tiver qualquer dúvida, não hesite em entrar em contato.
+**RESPONSE**
+```json
+{
+  "message": "User created"
+}
+```
 
-Atenciosamente,
+<h3 id="post-auth-detail">PUT /users/:id</h3>
 
-João Marcelo
-CTO
-GoAnd Slay
+**REQUEST**
+```json
+{
+  "age": 17
+}
+```
+
+**RESPONSE**
+```json
+{
+  "message": "User updated"
+}
+```
+
+<h3 id="get-auth-detail">DELETE /users/:id</h3>
+
+**RESPONSE**
+```json
+{
+  "message": "User Deleted"
+}
+```
+
