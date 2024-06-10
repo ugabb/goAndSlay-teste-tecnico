@@ -6,9 +6,9 @@ import { makeUpdateUser } from "../../../usecases/factories/make-update-user";
 
 export async function updateUser(req: Request, res: Response) {
   const updateUserBodySchema = z.object({
-    name: z.string().min(1, "Name is required"), // Adiciona uma mensagem de erro se o nome estiver vazio
-    email: z.string().email("Invalid email address"), // Verifica se o email é válido
-    age: z.coerce.number().positive("Age must be a positive number"), // Garante que a idade é um número positivo
+    name: z.string().min(1, "Name is required").optional(), // Adiciona uma mensagem de erro se o nome estiver vazio
+    email: z.string().email("Invalid email address").optional(), // Verifica se o email é válido
+    age: z.coerce.number().positive("Age must be a positive number").optional(), // Garante que a idade é um número positivo
   });
 
   const updateUserParamsSchema = z.object({
